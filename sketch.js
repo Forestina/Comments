@@ -3,8 +3,7 @@ let canvasHight = 500;
 let panelR = canvasWidth / 1.5;
 let sCtr, mCtr, hCtr;
 
-let inputX=200,inputY=200;
-let myComment='Please input your comment';
+let myComment = 'Please input your comment';
 
 //html
 let canvas;
@@ -25,22 +24,26 @@ function setup() {
 
   addGUI();
 
-  fill(19, 31, 37);
-  stroke(126, 178, 204);
+
   inputSettings();
 }
-function inputSettings(){
-  let inp = createInput('Please input your comment','text');
-  inp.position(inputX, inputY);
+function inputSettings() {
+  fill(180);
+  noStroke();
+  let rectWidth=550;
+  rect(12+rectWidth/2,windowHeight-110,rectWidth,50,15);
+
+  let inp = createInput('Please input your comment', 'text');
+  inp.position(25, windowHeight-120);
   inp.size(500);
   inp.input(myInputEvent);
 }
 function myInputEvent() {
-  myComment=this.value();
+  myComment = this.value();
 }
 
 function addGUI() {
-  
+
   //add a button
   if (displayState == 0) {
     button = createButton("Add comment");
@@ -60,7 +63,7 @@ function addGUI() {
 
 function handleButtonPress() {
 
-  if (displayState < 10) {
+  if (displayState < 2) {
     displayState++;
   } else {
     displayState = 0;
@@ -70,87 +73,58 @@ function handleButtonPress() {
     button.html("Add comment");
 
     console.log(myComment);
-    myCommentProcess(myComment,0);
+    myCommentProcess(myComment, 0);
 
 
   } else if (displayState == 1) {
     button.html("Add comment");
 
     console.log(myComment);
-    myCommentProcess(myComment,1);
-    
-  }
-  else if (displayState == 2) {
-    button.html("Add comment");
+    myCommentProcess(myComment, 1);
 
-    console.log(myComment);
-    myCommentProcess(myComment,2);
-    
-  }
-  else if (displayState == 3) {
-    button.html("Add comment");
-
-    console.log(myComment);
-    myCommentProcess(myComment,3);
-    
-  }
-  else if (displayState == 4) {
-    button.html("Add comment");
-
-    console.log(myComment);
-    myCommentProcess(myComment,4);
-    
-  }
-  else if (displayState == 5) {
-    button.html("Add comment");
-
-    console.log(myComment);
-    myCommentProcess(myComment,5);
-    
-  }
-  else if (displayState == 6) {
-    button.html("Add comment");
-
-    console.log(myComment);
-    myCommentProcess(myComment,6);
-    
-  }
-  else if (displayState == 7) {
-    button.html("Add comment");
-
-    console.log(myComment);
-    myCommentProcess(myComment,7);
-    
-  }
-  else if (displayState == 8) {
-    button.html("Add comment");
-
-    console.log(myComment);
-    myCommentProcess(myComment,8);
-    
-  }
-  else if (displayState == 9) {
-    button.html("Add comment");
-
-    console.log(myComment);
-    myCommentProcess(myComment,9);
-    
   }
 
-  
 }
-function myCommentProcess(displayText,num){
- 
-    let fontSize = map(displayText.length,0,200,30,20,true);
-    textSize(fontSize);
-    textWrap(WORD);
-    textAlign(CENTER);
-    text(displayText,300, 300+50*num, 1000);
+function myCommentProcess(displayText, num) {
 
-  
+
+  let x = generate('canvasWidth');
+  let y = generate('canvasHight');
+  let r = generate('ellipseRadius');
+
+  fill(generate('rgb'), generate('rgb'), generate('rgb'), 70);
+  noStroke();
+  ellipse(x, y, r, r);
+
+
+  fill(255);
+  stroke(126, 178, 204);
+  let fontSize = map(displayText.length, 0, 200, 20, 10, true);
+  textSize(fontSize);
+  textWrap(WORD);
+  textAlign(CENTER);
+  text(displayText, x, y, (2 / 3) * r);
+
+
+
+
 }
 function windowResized() {
 
   resizeCanvas(windowWidth, windowHeight);
 
+}
+
+function generate(name) {
+  switch (name) {
+    //positions
+    case 'canvasHight':
+      return Math.floor(random(300, windowHeight - 300));
+    case 'canvasWidth':
+      return Math.floor(random(300, windowWidth - 300));
+    case 'ellipseRadius':
+      return Math.floor(random(150, 300));
+    case 'rgb':
+      return Math.floor(random(0, 235));
+  }
 }
